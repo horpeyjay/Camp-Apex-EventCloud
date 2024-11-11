@@ -2,10 +2,12 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
         <members>CampApexTrigger</members>
+        <members>CampApexSponsorTrigger</members>
         <name>ApexTrigger</name>
     </types>
     <types>
         <members>CampApexHandlerClass</members>
+        <members>CampApexSponsorHandlerClass</members>
         <name>ApexClass</name>
     </types>
     <version>59.0</version>

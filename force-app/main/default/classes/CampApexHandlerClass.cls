@@ -22,14 +22,35 @@ public with sharing class CampApexHandlerClass {
             }    
         }
     }
-    /**When a CAMPX__Sponsor__c record is created, and the CAMPX__Status__c is blank, it should be set to "Pending" */
-    public static void pendingSponsorStatus(List<CAMPX__Sponsor__c> sponsorList){
-        if(!sponsorList.isEmpty()){
-            for(CAMPX__Sponsor__c cs : sponsorList){
-                if(cs.CAMPX__Status__c == null || String.isBlank(cs.CAMPX__Status__c)){
-                    cs.CAMPX__Status__c = 'Pending';
+    
+    /**
+     * The CAMPX__NetRevenue__c of an CAMPX__Event__c record should always reflect the formula: CAMPX__GrossRevenue__c - CAMPX__TotalExpenses__c
+    If either CAMPX__GrossRevenue__c or CAMPX__TotalExpenses__c are blank, the CAMPX__NetRevenue__c should be blank.
+     */
+    public static void eventNetRevenue(List<CAMPX__Event__c> eventList, Map<Id, CAMPX__Event__c> eventMap){
+        List<CAMPX__Event__c> newList = new List<CAMPX__Event__c>();
+        if(!eventList.isEmpty()){
+            for(CAMPX__Event__c ce : eventList){
+                if(eventMap != null){
+                    CAMPX__Event__c oldEvent = eventMap.get(ce.Id);
+
+                    if(ce.CAMPX__GrossRevenue__c != oldEvent.CAMPX__GrossRevenue__c || ce.CAMPX__TotalExpenses__c != oldEvent.CAMPX__TotalExpenses__c){
+                        newList.add(ce);
+                    }
+                }else{
+                    newList.add(ce);
                 }
             }
         }
-    }    
+
+        if(!newList.isEmpty()){
+            for(CAMPX__Event__c nce : newList){
+                if(nce.CAMPX__GrossRevenue__c == null || nce.CAMPX__TotalExpenses__c == null){
+                    nce.CAMPX__NetRevenue__c = null;
+                }else{
+                    nce.CAMPX__NetRevenue__c = nce.CAMPX__GrossRevenue__c - nce.CAMPX__TotalExpenses__c;
+                }
+            }
+        }
+    }
 }
