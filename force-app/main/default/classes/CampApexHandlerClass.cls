@@ -7,7 +7,7 @@ public with sharing class CampApexHandlerClass {
             }
         }
     }
-
+    
     public static void eventStatusChange(List<CAMPX__Event__c >eventList, Map<Id, CAMPX__Event__c > eventToIdMap){
 
         for(CAMPX__Event__c ce : eventList){

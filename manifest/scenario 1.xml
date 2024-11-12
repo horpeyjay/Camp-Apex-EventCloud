@@ -3,6 +3,7 @@
     <types>
         <members>CampApexTrigger</members>
         <members>CampApexSponsorTrigger</members>
+        <members>Testclassforevent</members>
         <name>ApexTrigger</name>
     </types>
     <types>
